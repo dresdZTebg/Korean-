@@ -53,13 +53,26 @@ local redzlib = {
       ["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
     }
   },
+  DarkRed = {
+		["Color Hub 1"] = ColorSequence.new({
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(28, 23, 25.5)),
+        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(30.5, 30.5, 30.5)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 23, 25.5))
+    }),
+    ["Color Hub 2"] = Color3.fromRGB(28, 28, 28),
+    ["Color Stroke"] = Color3.fromRGB(38, 38, 38),
+    ["Color Theme"] = Color3.fromRGB(255, 0, 0),
+    ["Color Text"] = Color3.fromRGB(240, 240, 240),
+    ["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
+     }  
+},
   Info = {
     Version = "1.0.2"
   },
   Save = {
     UISize = _G.SettingTable2.UISize or {550, 380},
     TabSize = 160,
-    Theme = "Darker"
+    Theme = "DarkRed"
   },
   Instances = {},
   Elements = {},
@@ -254,11 +267,7 @@ AddEle("Corner", function(parent, CornerRadius)
 
   -- Script para mudar a cor da borda continuamente
   spawn(function()
-    while true do
-        for i = 0, 1, 0.01 do -- Incremento suave para criar a transição
-            border.Color = Color3.fromHSV(i, 1, 1) -- Gradualmente alterando a tonalidade
-            wait(0.0002) -- Tempo entre cada passo da transição
-        end
+            border.Color = Color3.fromRGB(139, 0, 0)
     end
   end)
 
@@ -694,29 +703,12 @@ function redzlib:MakeWindow(Configs)
       Position = UDim2.fromScale(P, P),
       BackgroundTransparency = 1,
       BackgroundColor3 = Theme["Color Hub 2"],
-      AutoButtonColor = true,
+      AutoButtonColor = false,
       ImageColor3 = Color3.fromRGB(255, 0, 0) 
     }))
 
-    local function AnimateRainbow(button)
-      local hue = 0
-      while true do
-          hue = (hue + 2) % 360
-          local color = Color3.fromHSV(hue / 360, 1, 1)
-          button.ImageColor3 = color
-          wait(0.001) -- Ajuste a velocidade da animação alterando o valor da espera
-      end
-  end
-
-  AMinimizeButton = function(ID)
-    Button.Image = "rbxassetid://" .. ID
-  end
-
-  -- Inicia a animação em uma nova thread para não bloquear outras operações
-  spawn(function()
-      AnimateRainbow(Button)
-  end)
-
+    
+    
     local Stroke, Corner
     if Configs.Corner then
       Corner = Make("Corner", Button)
