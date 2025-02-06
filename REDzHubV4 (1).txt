@@ -703,12 +703,18 @@ function redzlib:MakeWindow(Configs)
       Position = UDim2.fromScale(P, P),
       BackgroundTransparency = 1,
       BackgroundColor3 = Theme["Color Hub 2"],
-      AutoButtonColor = false,
+      AutoButtonColor = true,
       ImageColor3 = Color3.fromRGB(255, 0, 0) 
     }))
 
     
-    
+  AMinimizeButton = function(ID)
+    Button.Image = "rbxassetid://" .. ID
+  end
+
+  -- Inicia a animação em uma nova thread para não bloquear outras operações
+ 
+
     local Stroke, Corner
     if Configs.Corner then
       Corner = Make("Corner", Button)
